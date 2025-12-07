@@ -129,7 +129,34 @@
         </div>
       </div>
     </header>
+<!-- Chatbot Flutuante -->
+<div id="chatbot-container" class="fixed bottom-6 right-6 z-50">
+  <!-- Botão Flutuante -->
+  <button id="chatbot-toggle" aria-label="Abrir Chat" class="bg-[#FFB700] text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform">
+    <i class="fas fa-comments text-2xl"></i>
+  </button>
 
+  <!-- Janela do Chat -->
+  <div id="chatbot-box" class="hidden w-80 h-96 bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border border-gray-200">
+    <div class="bg-[#004C01] text-white px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <i class="fas fa-sun text-[#FFB700]"></i>
+        <span class="font-semibold">Suntech Assistente</span>
+      </div>
+      <button id="chatbot-close" aria-label="Fechar Chat" class="hover:text-[#FFB700]"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto space-y-3 text-sm"></div>
+
+    <div class="p-3 border-t flex items-center gap-2">
+      <input id="chatbot-input" type="text" placeholder="Digite sua mensagem..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#FFB700] focus:outline-none">
+      <button id="chatbot-send" aria-label="Enviar mensagem" class="bg-[#FFB700] text-white px-3 py-2 rounded-md hover:bg-[#FFB700]/90">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Fim Chatbot Flutuante -->
     <main class="flex-1">
       <!-- Hero Section -->
       <section
@@ -576,7 +603,7 @@
             </p>
             <div class="flex gap-4">
               <a
-                href="#"
+                href="https://www.facebook.com/SunTech.pvh"
                 class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
               >
                 <i class="fab fa-facebook-f text-sm"></i>
@@ -686,6 +713,6 @@
     </footer>
 
     <!-- JavaScript -->
-  <script src="main.js" defer></script>
+  <script src="main.js"></script>
   </body>
 </html>
