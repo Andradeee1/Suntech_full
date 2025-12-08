@@ -1,3 +1,4 @@
+<!-- Lucas -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -67,106 +68,226 @@
             </div>
         </div>
 </header>
-<main class="min-h-screen flex items-center justify-center bg-gray-50 pt-15">
-  <section id="contato" class="w-full max-w-2xl p-6 bg-white rounded-xl border shadow-lg mt-10 mb-14">
-    <h3 class="text-2xl font-semibold mb-6 text-center">Solicite um Orçamento</h3>
-    <form id="contact-form" class="space-y-5">
+<!-- Chatbot Flutuante -->
+<div id="chatbot-container" class="fixed bottom-6 right-6 z-50">
+  <!-- Botão Flutuante -->
+  <button id="chatbot-toggle" aria-label="Abrir Chat" class="bg-[#FFB700] text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform">
+    <i class="fas fa-comments text-2xl"></i>
+  </button>
+
+  <!-- Janela do Chat -->
+  <div id="chatbot-box" class="hidden w-80 h-96 bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border border-gray-200">
+    <div class="bg-[#004C01] text-white px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <i class="fas fa-sun text-[#FFB700]"></i>
+        <span class="font-semibold">Suntech Assistente</span>
+      </div>
+      <button id="chatbot-close" aria-label="Fechar Chat" class="hover:text-[#FFB700]"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto space-y-3 text-sm"></div>
+
+    <div class="p-3 border-t flex items-center gap-2">
+      <input id="chatbot-input" type="text" placeholder="Digite sua mensagem..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#FFB700] focus:outline-none">
+      <button id="chatbot-send" aria-label="Enviar mensagem" class="bg-[#FFB700] text-white px-3 py-2 rounded-md hover:bg-[#FFB700]/90">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Fim Chatbot Flutuante -->
+<main class="min-h-screen flex items-center justify-center bg-gray-50 pt-15 relative">
+  <section id="contato" class="w-full max-w-2xl p-8 bg-white rounded-2xl border border-gray-100 shadow-xl mt-10 mb-14 transition-all duration-300 hover:shadow-2xl">
+    <div class="text-center mb-8">
+      <h3 class="text-3xl font-bold text-gray-800 mb-2">Solicite um Orçamento</h3>
+      <p class="text-gray-500">Preencha os dados abaixo e entraremos em contato rapidamente.</p>
+    </div>
+    
+    <form id="contact-form" class="space-y-6">
       <!-- Linha 1 -->
-      <div class="sm:grid-cols-2 gap-4">
-        <div class="space-y-2">
-          <label for="name" class="text-sm font-medium">Nome Completo</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Seu nome"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFB700]"
-          />
+      <div class="space-y-2">
+        <label for="name" class="text-sm font-semibold text-gray-700">Nome Completo</label>
+        <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                <i class="fas fa-user"></i>
+            </span>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Seu nome completo"
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFB700] focus:border-transparent bg-gray-50 focus:bg-white transition-all duration-200"
+            />
         </div>
       </div>
+
       <!-- Linha 2 -->
-      <div class="grid sm:grid-cols-2 gap-4">
+      <div class="grid sm:grid-cols-2 gap-6">
         <div class="space-y-2">
-          <label for="email" class="text-sm font-medium">E-mail</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="seu@email.com"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFB700]"
-          />
+          <label for="email" class="text-sm font-semibold text-gray-700">E-mail</label>
+          <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <i class="fas fa-envelope"></i>
+              </span>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="seu@email.com"
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFB700] focus:border-transparent bg-gray-50 focus:bg-white transition-all duration-200"
+              />
+          </div>
         </div>
-                <div class="space-y-2">
-          <label for="phone" class="text-sm font-medium">Telefone</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            placeholder="(00) 00000-0000"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFB700]"
-          />
-        </div>
+        <div class="space-y-2">
+          <label for="phone" class="text-sm font-semibold text-gray-700">Telefone</label>
+          <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <i class="fas fa-phone"></i>
+              </span>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="(00) 00000-0000"
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFB700] focus:border-transparent bg-gray-50 focus:bg-white transition-all duration-200"
+              />
+          </div>
         </div>
       </div>
+
       <!-- Linha 3 -->
-<!-- CPF/CNPJ e Cidade -->
-      <div class="grid sm:grid-cols-2 gap-4">
+      <div class="grid sm:grid-cols-2 gap-6">
         <div class="space-y-2">
-          <label for="cpf" class="text-sm font-medium">CPF ou CNPJ</label>
-          <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00 ou 00.000.000/0000-00"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFB700]" />
+          <label for="cpf" class="text-sm font-semibold text-gray-700">CPF ou CNPJ</label>
+          <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <i class="fas fa-id-card"></i>
+              </span>
+              <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00"
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFB700] focus:border-transparent bg-gray-50 focus:bg-white transition-all duration-200" />
+          </div>
         </div>
         <div class="space-y-2">
-          <label for="city" class="text-sm font-medium">Cidade</label>
-          <input type="text" id="city" name="city" placeholder="Sua cidade"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFB700]" />
+          <label for="city" class="text-sm font-semibold text-gray-700">Cidade</label>
+           <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <i class="fas fa-map-marker-alt"></i>
+              </span>
+              <input type="text" id="city" name="city" placeholder="Sua cidade"
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFB700] focus:border-transparent bg-gray-50 focus:bg-white transition-all duration-200" />
+           </div>
         </div>
       </div>
 
       <!-- Endereço -->
       <div class="space-y-2">
-        <label for="address" class="text-sm font-medium">Endereço</label>
-        <input type="text" id="address" name="address" placeholder="Rua, número - bairro"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFB700]" />
+        <label for="address" class="text-sm font-semibold text-gray-700">Endereço</label>
+         <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <i class="fas fa-home"></i>
+              </span>
+              <input type="text" id="address" name="address" placeholder="Rua, número - bairro"
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFB700] focus:border-transparent bg-gray-50 focus:bg-white transition-all duration-200" />
+         </div>
       </div>
 
       <!-- Tipo de Projeto e Potência Estimada -->
-      <div class="grid sm:grid-cols-2 gap-4">
+      <div class="grid sm:grid-cols-2 gap-6">
         <div class="space-y-2">
-          <label for="tipo" class="text-sm font-medium">Tipo de Projeto</label>
-          <select id="tipo" name="tipo"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-[#FFB700]">
-            <option value="">Selecione</option>
-            <option value="residencial">Residencial</option>
-            <option value="comercial">Comercial</option>
-            <option value="industrial">Industrial</option>
-          </select>
+          <label for="tipo" class="text-sm font-semibold text-gray-700">Tipo de Projeto</label>
+           <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <i class="fas fa-solar-panel"></i>
+              </span>
+              <select id="tipo" name="tipo"
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#FFB700] focus:border-transparent transition-all duration-200 appearance-none">
+                <option value="">Selecione</option>
+                <option value="residencial">Residencial</option>
+                <option value="comercial">Comercial</option>
+                <option value="industrial">Industrial</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-500">
+                <i class="fas fa-chevron-down text-xs"></i>
+              </div>
+           </div>
         </div>
         <div class="space-y-2">
-          <label for="potencia" class="text-sm font-medium">Potência Estimada (kWp)</label>
-          <input type="number" id="potencia" name="potencia" placeholder="Ex: 5.5"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFB700]" />
+          <label for="potencia" class="text-sm font-semibold text-gray-700">Potência Estimada (kWp)</label>
+           <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <i class="fas fa-bolt"></i>
+              </span>
+              <input type="number" id="potencia" name="potencia" placeholder="Ex: 5.5"
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFB700] focus:border-transparent bg-gray-50 focus:bg-white transition-all duration-200" />
+           </div>
         </div>
       </div>
 
       <!-- Mensagem -->
       <div class="space-y-2">
-        <label for="message" class="text-sm font-medium">Mensagem</label>
+        <label for="message" class="text-sm font-semibold text-gray-700">Mensagem</label>
         <textarea
           id="message"
           name="message"
-          placeholder="Descreva seu projeto"
+          placeholder="Descreva seu projeto ou dúvida..."
           rows="4"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFB700]"
+          class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFB700] focus:border-transparent bg-gray-50 focus:bg-white transition-all duration-200 resize-none shadow-sm"
         ></textarea>
       </div>
 
       <!-- Botão -->
-      <button
-        type="submit" class="bg-[#FFB700] hover:bg-[#e6a800] text-white font-medium px-4 py-2 rounded-md transition-colors duration-200">Enviar Mensagem</button>
-      <a href="index.html" class="ml-3 inline-block px-4 py-2 rounded-md border border-gray-200">Voltar</a>
+      <div class="flex flex-col sm:flex-row gap-4 pt-4">
+          <button
+            type="submit" class="flex-1 bg-gradient-to-r from-[#FFB700] to-[#FF9500] hover:from-[#e6a800] hover:to-[#e68a00] text-white font-bold text-lg px-6 py-3 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2">
+            <i class="fab fa-whatsapp text-xl"></i>
+            Enviar Mensagem
+          </button>
+          <a href="index.html" class="sm:w-auto w-full text-center px-6 py-3 rounded-lg border border-gray-300 text-gray-600 font-medium hover:bg-gray-50 transition-colors duration-200">
+             Voltar ao Início
+          </a>
+      </div>
     </form>
   </section>
+
+  <!-- Modal de Sucesso -->
+  <div id="success-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" id="modal-overlay"></div>
+    
+    <!-- Modal Content -->
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 relative transform transition-all scale-100 z-10 text-center animate-fade-in-up">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-check text-4xl text-green-500"></i>
+        </div>
+        
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">Mensagem Preenchida!</h3>
+        <p class="text-gray-600 mb-8">
+            Você será redirecionado para o WhatsApp para concluir o envio da sua solicitação.
+        </p>
+        
+        <button id="close-modal" class="w-full bg-[#004C01] hover:bg-[#003801] text-white font-semibold py-3 px-6 rounded-lg transition-colors outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#004C01]">
+            Entendi, fechar
+        </button>
+    </div>
+  </div>
+
+  <style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 20px, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    .animate-fade-in-up {
+        animation: fadeInUp 0.4s ease-out forwards;
+    }
+  </style>
+
+
 </main>
     <!-- Footer -->
     <footer class="bg-[#004C01] text-white py-12">
@@ -295,6 +416,7 @@
       </div>
     </footer>
         <!-- JavaScript -->
-    <script src="main.js"></script>
+    <script src="main.js?v=7" charset="utf-8"></script>
   </body>
+
 </html>

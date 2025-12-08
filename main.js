@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+
   // === Menu Mobile ===
   const mobileMenuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
@@ -13,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-    // Generate Projects Dynamically
+  // === Gerar Projetos Dinamicamente ===
   const projectsGrid = document.getElementById("projects-grid");
   if (projectsGrid) {
     const projects = [
@@ -61,40 +62,61 @@ document.addEventListener("DOMContentLoaded", function () {
       const potencia = document.getElementById("potencia").value.trim();
       const mensagem = document.getElementById("message").value.trim();
 
-      // Validação simples
       if (!nome || !email || !telefone) {
         alert("Por favor, preencha pelo menos Nome, E-mail e Telefone.");
         return;
       }
 
-      // Número do WhatsApp (com DDI 55 e DDD)
-      const numeroEmpresa = "556993853683"; // só números
+      const numeroEmpresa = "556993853683";
 
-      // Monta a mensagem com quebras de linha
+      const sun = String.fromCodePoint(0x2600);
+      const bust = String.fromCodePoint(0x1F464);
+      const mail = String.fromCodePoint(0x1F4E7);
+      const phone = String.fromCodePoint(0x1F4F1);
+      const id = String.fromCodePoint(0x1F194);
+      const cityIcon = String.fromCodePoint(0x1F3D9);
+      const pin = String.fromCodePoint(0x1F4CD);
+      const build = String.fromCodePoint(0x1F3D7);
+      const zap = String.fromCodePoint(0x26A1);
+      const memo = String.fromCodePoint(0x1F4DD);
+      const check = String.fromCodePoint(0x2705);
+
       const texto =
-    `🌞 *Novo Pedido de Orçamento - SunTech Solar* 🌞%0A%0A` +
-    `👤 *Nome:* ${nome}%0A` +
-    `📧 *E-mail:* ${email}%0A` +
-    `📱 *Telefone:* ${telefone}%0A` +
-    `🧾 *CPF/CNPJ:* ${cpf}%0A` +
-    `🏙️ *Cidade:* ${cidade}%0A` +
-    `📍 *Endereço:* ${endereco}%0A%0A` +
-    `⚙️ *Tipo de Projeto:* ${tipo}%0A` +
-    `🔋 *Potência Estimada:* ${potencia} kWp%0A%0A` +
-    `📝 *Mensagem adicional:*%0A${mensagem}%0A%0A` +
-    `_________________________%0A` +
-    `📅 Enviado via *Formulário do Site*`;
+        `${sun} *Novo Pedido de Orçamento - SunTech Solar* ${sun}\n\n` +
+        `${bust} *Nome:* ${nome}\n` +
+        `${mail} *E-mail:* ${email}\n` +
+        `${phone} *Telefone:* ${telefone}\n` +
+        `${id} *CPF/CNPJ:* ${cpf}\n` +
+        `${cityIcon} *Cidade:* ${cidade}\n` +
+        `${pin} *Endereço:* ${endereco}\n\n` +
+        `${build} *Tipo de Projeto:* ${tipo}\n` +
+        `${zap} *Potência Estimada:* ${potencia} kWp\n\n` +
+        `${memo} *Mensagem adicional:*\n${mensagem}\n\n` +
+        `${check} *Enviado via Formulário do Site*`;
 
-      // Monta o link correto do WhatsApp
-      const url = `https://wa.me/${numeroEmpresa}?text=${texto}`;
+      const url = "https://api.whatsapp.com/send?phone=" + numeroEmpresa + "&text=" + encodeURIComponent(texto);
+      window.open(url, "_blank");
 
-      // Abre o WhatsApp em nova aba
-      window.open(url, "_blank"); 
+      const successModal = document.getElementById("success-modal");
+      if (successModal) {
+        successModal.classList.remove("hidden");
+        contactForm.reset();
+      }
     });
-  }
-});
+    // === Modal de Sucesso ===
+    const closeModalBtn = document.getElementById("close-modal");
+    const successModal = document.getElementById("success-modal");
+    const modalOverlay = document.getElementById("modal-overlay");
 
-document.addEventListener("DOMContentLoaded", function () {
+    if (closeModalBtn && successModal) {
+      closeModalBtn.addEventListener("click", () => successModal.classList.add("hidden"));
+      if (modalOverlay) {
+        modalOverlay.addEventListener("click", () => successModal.classList.add("hidden"));
+      }
+    }
+  }
+
+  // === Chatbot ===
   const toggle = document.getElementById("chatbot-toggle");
   const box = document.getElementById("chatbot-box");
   const closeBtn = document.getElementById("chatbot-close");
@@ -160,13 +182,39 @@ document.addEventListener("DOMContentLoaded", function () {
     if (existente) existente.remove();
 
     const numero = "5569993853683";
-    let mensagem = `Olá! Tenho interesse em atendimento.\n\nNome: ${dados.nome}\nCidade: ${dados.cidade}\n Tipo de Projeto ${dados.tipoProjeto}\nConsumo: ${dados.consumo} kWh\n`;
+    let mensagem = "";
 
-    if (tipoFluxo === "simulacao") {
-      mensagem += `Área: ${dados.area} m²\nPlaca: ${dados.placa}w\nQuantidade: ${dados.quantidade}\n`;
+    if (tipoFluxo === "orcamento") {
+      mensagem =
+        "☀️ *Novo Pedido de Atendimento - SunTech Solar* ☀️\n\n" +
+        "Olá! Suntech, tenho interesse em atendimento.\n\n" +
+        `👤 *Nome:* ${dados.nome}\n` +
+        `🏙️ *Cidade:* ${dados.cidade}\n` +
+        `🏗️ *Tipo de Projeto:* ${dados.tipoProjeto}\n` +
+        `⚡ *Consumo:* ${dados.consumo} kWh\n\n` +
+        "✅ *Enviado via Assistente da Suntech Solar*";
+    } else {
+      mensagem =
+        "☀️ *Novo Pedido de Simulação - SunTech Solar* ☀️\n\n" +
+        "Olá! Tenho interesse em realizar uma simulação.\n\n" +
+        `👤 *Nome:* ${dados.nome}\n` +
+        `🏙️ *Cidade:* ${dados.cidade}\n` +
+        `🏗️ *Tipo de Projeto:* ${dados.tipoProjeto || "Não informado"}\n` +
+        `⚡ *Consumo:* ${dados.consumo} kWh\n` +
+        `📐 *Área:* ${dados.area} m²\n` +
+        `🔋 *Potência da Placa:* ${dados.placa}W\n` +
+        `🧱 *Quantidade de Placas:* ${dados.quantidade}\n\n` +
+        "✅ *Enviado via Assistente da Suntech Solar*";
     }
 
-    const link = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+    // normaliza e codifica
+    const mensagemNormalizada = mensagem.normalize("NFC");
+    const encoded = encodeURIComponent(mensagemNormalizada);
+    const link = `https://api.whatsapp.com/send?phone=${numero}&text=${encoded}`;
+
+    console.log("Mensagem (raw):", mensagemNormalizada);
+    console.log("Encoded:", encoded);
+    console.log("Link:", link);
 
     const btn = document.createElement("a");
     btn.id = "whatsapp-btn";
@@ -200,80 +248,73 @@ document.addEventListener("DOMContentLoaded", function () {
     input.value = "";
     msg(texto, "user");
 
-switch (etapa) {
-  case 1:
-    dados.nome = texto;
-    etapa = 2;
-    botDigitando();
-    setTimeout(() => msg("Qual cidade você mora?", "bot"), 600);
-    break;
+    switch (etapa) {
+      case 1:
+        dados.nome = texto;
+        etapa = 2;
+        botDigitando();
+        setTimeout(() => msg("Qual cidade você mora?", "bot"), 600);
+        break;
 
-  case 2:
-    if (!/[a-zA-ZÀ-ú]/.test(texto)) {
-      return msg("Por favor, informe o nome da cidade corretamente 🏙️", "bot");
+      case 2:
+        if (!/[a-zA-ZÀ-ú]/.test(texto)) {
+          return msg("Por favor, informe o nome da cidade corretamente 🏙️", "bot");
+        }
+
+        dados.cidade = texto;
+        etapa = 3;
+        botDigitando();
+        setTimeout(() => msg("Qual seu tipo de projeto? (Residencial, Comercial ou Industrial)", "bot"), 600);
+        break;
+
+      case 3:
+        const tipoProjeto = texto.toLowerCase();
+
+        if (!["residencial", "comercial", "industrial"].includes(tipoProjeto)) {
+          return msg("Escolha uma opção válida: Residencial, Comercial ou Industrial 🏗️", "bot");
+        }
+
+        dados.tipoProjeto = texto;
+        etapa = 4;
+        botDigitando();
+        setTimeout(() => msg("Qual o consumo médio mensal (em kWh)?", "bot"), 600);
+        break;
+
+      case 4:
+        if (!validarNumero(texto)) return msg("Por favor, informe um número válido 🧮", "bot");
+        dados.consumo = texto;
+
+        if (tipoFluxo === "orcamento") {
+          botaoWhats();
+        } else {
+          etapa = 5;
+          botDigitando();
+          setTimeout(() => msg("Qual o tamanho da área disponível (m²)?", "bot"), 600);
+        }
+        break;
+
+      case 5:
+        if (!validarNumero(texto)) return msg("Digite um valor numérico válido 🙂", "bot");
+        dados.area = texto;
+        etapa = 6;
+        botDigitando();
+        setTimeout(() => msg("Qual a potência da placa? (ex: 550W)", "bot"), 600);
+        break;
+
+      case 6:
+        if (!validarNumero(texto)) return msg("Informe apenas números (ex: 550) 📌", "bot");
+        dados.placa = texto;
+        etapa = 7;
+        botDigitando();
+        setTimeout(() => msg("Quantas placas deseja instalar?", "bot"), 600);
+        break;
+
+      case 7:
+        if (!validarNumero(texto)) return msg("Digite uma quantidade válida 😊", "bot");
+        dados.quantidade = texto;
+        botaoWhats();
+        break;
     }
-
-    dados.cidade = texto;
-
-    if (tipoFluxo === "orcamento") {
-      etapa = 3;
-      botDigitando();
-      setTimeout(() => msg("Qual seu tipo de projeto? (Residencial, Comercial ou Industrial)", "bot"), 600);
-    } else {
-      etapa = 4;
-      botDigitando();
-      setTimeout(() => msg("Qual o consumo médio mensal (em kWh)?", "bot"), 600);
-    }
-    break;
-
-  case 3: // Somente para atendimento
-    const tipo = texto.toLowerCase();
-
-    if (!["residencial", "comercial", "industrial"].includes(tipo)) {
-      return msg("Escolha uma opção válida: Residencial, Comercial ou Industrial 🏗️", "bot");
-    }
-
-    dados.tipoProjeto = texto;
-    etapa = 4;
-    botDigitando();
-    setTimeout(() => msg("Qual o consumo médio mensal (em kWh)?", "bot"), 600);
-    break;
-
-  case 4:
-    if (!validarNumero(texto)) return msg("Por favor, informe um número válido 🧮", "bot");
-    dados.consumo = texto;
-
-    if (tipoFluxo === "orcamento") {
-      botaoWhats();
-    } else {
-      etapa = 5;
-      botDigitando();
-      setTimeout(() => msg("Qual o tamanho da área disponível (m²)?", "bot"), 600);
-    }
-    break;
-
-  case 5:
-    if (!validarNumero(texto)) return msg("Digite um valor numérico válido 🙂", "bot");
-    dados.area = texto;
-    etapa = 6;
-    botDigitando();
-    setTimeout(() => msg("Qual a potência da placa? (ex: 550W)", "bot"), 600);
-    break;
-
-  case 6:
-    if (!validarNumero(texto)) return msg("Informe apenas números (ex: 550) 📌", "bot");
-    dados.placa = texto;
-    etapa = 7;
-    botDigitando();
-    setTimeout(() => msg("Quantas placas deseja instalar?", "bot"), 600);
-    break;
-
-  case 7:
-    if (!validarNumero(texto)) return msg("Digite uma quantidade válida 😊", "bot");
-    dados.quantidade = texto;
-    botaoWhats();
-    break;
-}
 
   }
 
@@ -290,7 +331,7 @@ switch (etapa) {
 
   // Abrir / Fechar chat
   toggle.onclick = () => { box.classList.remove("hidden"); toggle.classList.add("hidden"); messages.innerHTML = ""; iniciarSaudacao(); }; // limpa as mensagens
-  closeBtn.onclick = () => { box.classList.add("hidden"); toggle.classList.remove("hidden");}; // Não chamar resetarChat aqui 
+  closeBtn.onclick = () => { box.classList.add("hidden"); toggle.classList.remove("hidden"); }; // Não chamar resetarChat aqui 
 
   // Saudação inicial
   function iniciarSaudacao() {
@@ -300,4 +341,5 @@ switch (etapa) {
       botoesInicio();
     }, 800);
   }
+
 });
